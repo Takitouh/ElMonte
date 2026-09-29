@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://bctrx7hle0db7"]
+
+[ext_resource type="Texture2D" uid="uid://c1tnd0ncg6be1" path="res://spritesheet.png" id="1_4flbx"]
+
+[sub_resource type="GDScript" id="GDScript_bp1hc"]
+script/source = "extends CharacterBody2D
+
+@onready var animated_sprite = $AnimatedSprite2D
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+
+func _physics_process(delta: float) -> void:
+	# Gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Check if crouching
+	var crouching := Input.is_action_pressed(\"crouch\") and is_on_floor()
+
+	# Jump
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor() and not crouching:
+		velocity.y = JUMP_VELOCITY
+
+	# Horizontal movement
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+
+	if direction and not crouching:
+		velocity.x = direction * SPEED
+
+		# Face the direction we're moving
+		if direction > 0:
+			animated_sprite.flip_h = false
+		elif direction < 0:
+			animated_sprite.flip_h = true
+
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	# Choose animation
+	if not is_on_floor():
+		if velocity.y < 0:
+			animated_sprite.play(\"jump\")
+		else:
+			animated_sprite.play(\"fall\")
+	elif crouching:
+		animated_sprite.play(\"crouch\")
+	elif direction:
+		animated_sprite.play(\"walk\")
+	else:
+		animated_sprite.play(\"idle\")
+
+	move_and_slide()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bp1hc"]
+size = Vector2(75, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sweqy"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4flbx"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dw050"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b26j0"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7ghd"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvl01"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bp1hc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}],
+"loop": 1,
+"name": &"crouch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3pqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqtel")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_sweqy")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_2hs0m")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_1jxqw")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_4flbx")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_dw050")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b26j0")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7ghd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvl01")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 4.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=1804641694]
+script = SubResource("GDScript_bp1hc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1361906433]
+position = Vector2(-4, 1.5)
+shape = SubResource("RectangleShape2D_bp1hc")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=971930946]
+zoom = Vector2(6, 6)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=520663550]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_bp1hc")
+animation = &"idle"

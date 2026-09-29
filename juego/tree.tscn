@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bbcms42qwjc6o"]
+
+[ext_resource type="Texture2D" uid="uid://r5e1d8inlyur" path="res://icon.svg" id="1_brfkd"]
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1632033528]
+position = Vector2(154, -70)
+texture = ExtResource("1_brfkd")

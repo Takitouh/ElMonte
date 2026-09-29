@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://denph2cj1jlbo"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_bp1hc"]
+
+[node name="floor" type="StaticBody2D" unique_id=707439246]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1322116324]
+position = Vector2(0, 81)
+shape = SubResource("WorldBoundaryShape2D_bp1hc")

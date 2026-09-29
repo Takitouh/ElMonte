@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cne3mfpa8r4rc"]
+
+[ext_resource type="PackedScene" uid="uid://bctrx7hle0db7" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bbcms42qwjc6o" path="res://tree.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://denph2cj1jlbo" path="res://level_1.tscn" id="3_1bvp3"]
+
+[node name="Node2D" type="Node2D" unique_id=1014452038]
+
+[node name="Player" parent="." unique_id=1804641694 instance=ExtResource("1_ig7tw")]
+
+[node name="Sprite2D" parent="." unique_id=1632033528 instance=ExtResource("2_h2yge")]
+
+[node name="floor" parent="." unique_id=707439246 instance=ExtResource("3_1bvp3")]
