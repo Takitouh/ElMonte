@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bctrx7hle0db7"]
 
-[ext_resource type="Texture2D" uid="uid://c1tnd0ncg6be1" path="res://spritesheet.png" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://c1tnd0ncg6be1" path="res://sprites/campesino/spritesheet.png" id="1_4flbx"]
 
 [sub_resource type="GDScript" id="GDScript_bp1hc"]
 script/source = "extends CharacterBody2D
